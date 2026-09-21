@@ -149,7 +149,7 @@ if ($EMAIL) :
 <?php
 endif;
 ?>
-		<nav class="navbar navbar-expand-lg bg-body-tertiary text-nowrap mb-3">
+		<nav class="navbar navbar-expand-lg sticky-top text-nowrap mb-3 q4-navbar">
 			<div class="container-fluid">
 				<a class="reloadlink navbar-brand" href="">
 					<img alt="<?php echo I18n::_($NAME); ?>" src="img/icon.svg" height="38" />

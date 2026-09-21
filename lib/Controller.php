@@ -419,7 +419,7 @@ class Controller
         // be opened. Didn't work with `same-origin-allow-popups` either.
         // See issue https://github.com/PrivateBin/PrivateBin/issues/970 for details.
         // header('Cross-Origin-Opener-Policy: same-origin');
-        header('Permissions-Policy: browsing-topics=()');
+        header('Permissions-Policy: accelerometer=(), camera=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), publickey-credentials-create=(), screen-wake-lock=(), usb=(), web-share=(), xr-spatial-tracking=()');
         header('Referrer-Policy: no-referrer');
         header('X-Content-Type-Options: nosniff');
         header('X-Frame-Options: deny');
