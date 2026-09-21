@@ -4,14 +4,35 @@
 ; All options: https://github.com/PrivateBin/PrivateBin/wiki/Configuration
 
 [main]
-discussion = true
+discussion = false
+opendiscussion = false
 password = true
 fileupload = false
-sizelimit = 10000000
+burnafterreadingselected = true
+defaultformatter = "plaintext"
+sizelimit = 2097152
+templateselection = false
+httpwarning = true
+compression = "zlib"
+
+[expire]
+default = "1week"
+
+[expire_options]
+5min = 300
+10min = 600
+1hour = 3600
+1day = 86400
+1week = 604800
 
 ; RavenGuard rebuilds X-Forwarded-For, so the traffic limiter can trust it
 [traffic]
+limit = 10
 header = "X_FORWARDED_FOR"
+
+[purge]
+limit = 300
+batchsize = 10
 
 [model]
 class = Filesystem
