@@ -71,6 +71,7 @@ html[dir="rtl"] #deletelink, html[dir="rtl"] #qrcodemodalClose {
 	--bs-link-color-rgb: 10, 10, 11;
 	--bs-link-hover-color: #3a3a42;
 	--bs-link-hover-color-rgb: 58, 58, 66;
+	--q4-accent: #c2410c;
 }
 
 [data-bs-theme=dark] {
@@ -82,6 +83,7 @@ html[dir="rtl"] #deletelink, html[dir="rtl"] #qrcodemodalClose {
 	--bs-link-color-rgb: 250, 250, 250;
 	--bs-link-hover-color: #a1a1aa;
 	--bs-link-hover-color-rgb: 161, 161, 170;
+	--q4-accent: #fb923c;
 }
 
 .btn-primary {
@@ -112,4 +114,81 @@ html[dir="rtl"] #deletelink, html[dir="rtl"] #qrcodemodalClose {
 	--bs-btn-disabled-color: #0a0a0b;
 	--bs-btn-disabled-bg: #fafafa;
 	--bs-btn-disabled-border-color: #fafafa;
+}
+
+/* modern baseline: stable scrollbar, readable wrapping, accent affordances */
+
+html {
+	scrollbar-gutter: stable;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+	text-wrap: balance;
+}
+
+p, blockquote {
+	text-wrap: pretty;
+}
+
+::selection {
+	background: var(--q4-accent);
+	color: #fafafa;
+}
+
+input[type="checkbox"], input[type="radio"] {
+	accent-color: var(--q4-accent);
+}
+
+:focus-visible {
+	outline: 2px solid var(--q4-accent);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+/* larger hit areas only on coarse pointers, desktop layout unchanged */
+@media (pointer: coarse) {
+	.btn, .nav-link, .dropdown-item {
+		min-height: 44px;
+	}
+	.dropdown-item {
+		display: flex;
+		align-items: center;
+	}
+}
+
+/* the editor and reply fields grow with their content */
+#message, .replymessage {
+	field-sizing: content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media (prefers-contrast: more) {
+	:root, [data-bs-theme=light] {
+		--bs-border-color: #52525b;
+		--bs-secondary-color: #3f3f46;
+	}
+	[data-bs-theme=dark] {
+		--bs-border-color: #a1a1aa;
+		--bs-secondary-color: #d4d4d8;
+	}
+	a {
+		text-decoration-thickness: 2px;
+	}
+}
+
+/* forced colors mode ignores custom colors, keep focus visible on system colors */
+@media (forced-colors: active) {
+	:focus-visible {
+		outline: 2px solid Highlight;
+	}
+	.btn-primary {
+		border: 1px solid ButtonText;
+	}
 }
