@@ -105,11 +105,11 @@ class ViewTest extends TestCase
                 $content,
                 $template . ': discussions available if configured'
             );
-            // testing version number in JS address, since other instances may not be present in different templates
+            // testing cache buster in JS address, since other instances may not be present in different templates
             $this->assertMatchesRegularExpression(
-                '#<script[^>]+src="js/privatebin.js\\?' . rawurlencode(self::$version) . '"[^>]*>#',
+                '#<script[^>]+src="js/privatebin.js\\?\\d+"[^>]*>#',
                 $content,
-                $template . ': outputs version correctly'
+                $template . ': outputs cache buster'
             );
         }
     }
