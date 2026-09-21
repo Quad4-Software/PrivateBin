@@ -1,0 +1,33 @@
+name: privatebin
+
+services:
+  privatebin:
+    build: .
+    image: privatebin:local
+    # RavenGuard listens on 8080 and proxies to the app. Publish on loopback
+    # only and put your TLS-terminating edge proxy in front, or widen the
+    # bind if this container is the edge itself.
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      # enable the browser challenge only with a real secret (16+ chars)
+      RG_CHALLENGE_ENABLED: ${RG_CHALLENGE_ENABLED:-false}
+      RG_CHALLENGE_SECRET: ${RG_CHALLENGE_SECRET:-}
+      RG_TRUSTED_PROXIES: ${RG_TRUSTED_PROXIES:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,127.0.0.0/8,fc00::/7,::1/128}
+      RG_SITE_PUBLIC_URL: ${RG_SITE_PUBLIC_URL:-}
+      RG_ADMIN_ENABLED: ${RG_ADMIN_ENABLED:-false}
+      TZ: ${TZ:-UTC}
+    volumes:
+      - data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=docker/seccomp-ravenguard.json
+    restart: unless-stopped
+
+volumes:
+  data:

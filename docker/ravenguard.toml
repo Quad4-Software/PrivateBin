@@ -1,0 +1,49 @@
+# RavenGuard WAF in front of PrivateBin.
+# Docs: https://ravenguard.quad4.io/docs/configuration
+# Every value here can be overridden with RG_* environment variables.
+
+[listen]
+http = ":8080"
+
+# TLS ends at the edge proxy in front of this container. For edge mode with
+# ACME, see the deployment docs.
+[tls]
+mode = "off"
+
+[upstream]
+url = "http://127.0.0.1:8000"
+
+[upstream.health]
+enabled = true
+path = "/"
+interval = "30s"
+timeout = "3s"
+
+# This container is expected to sit behind a reverse proxy (Traefik, nginx,
+# Caddy). RavenGuard rebuilds the client IP from X-Forwarded-For for requests
+# arriving from these ranges. Restrict with RG_TRUSTED_PROXIES if the WAF port
+# is reachable directly.
+[trust]
+mode = "behind_proxy"
+trusted_proxies = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "127.0.0.0/8", "fc00::/7", "::1/128"]
+real_ip_header = "X-Forwarded-For"
+proto_header = "X-Forwarded-Proto"
+
+# JavaScript proof-of-work gate. Enable with RG_CHALLENGE_ENABLED=true and set
+# RG_CHALLENGE_SECRET to a random 16+ character value.
+[challenge]
+enabled = false
+
+# Admin control plane. Keep disabled here, it must never share the public WAF
+# port. Enable with RG_ADMIN_ENABLED and bind it to a private address.
+# data_dir also determines where the manual certificate store lives, keep it
+# on the writable /data volume so a read-only root filesystem works.
+[admin]
+enabled = false
+data_dir = "/data/ravenguard"
+
+[logging]
+format = "text"
+
+[sandbox]
+mode = "best_effort"
