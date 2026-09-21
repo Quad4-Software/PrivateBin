@@ -23,3 +23,4 @@ composer.json
 composer.lock
 Procfile
 *.md
+**/node_modules

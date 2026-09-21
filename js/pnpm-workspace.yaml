@@ -1,0 +1,9 @@
+# pnpm settings, see https://pnpm.io/settings
+
+# Delay freshly published package versions for 24 hours. Most npm
+# supply chain compromises are detected and yanked inside that window.
+minimumReleaseAge: 1440
+
+# Fail installs when a dependency wants to run a lifecycle or build
+# script that is not on the allowlist. None of our dependencies need one.
+strictDepBuilds: true
