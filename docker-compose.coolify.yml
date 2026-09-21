@@ -37,9 +37,12 @@ services:
       - /tmp:size=64m,mode=1777,nodev,noexec
     cap_drop:
       - ALL
+    # No custom seccomp profile here. Coolify deploys the compose file
+    # without the repo checkout, so the profile path would not resolve.
+    # Docker default seccomp still applies and RavenGuard enforces its own
+    # seccomp and landlock in-process.
     security_opt:
       - no-new-privileges:true
-      - seccomp=docker/seccomp-ravenguard.json
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/"]
       interval: 30s
