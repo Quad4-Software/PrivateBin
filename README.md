@@ -127,6 +127,6 @@ PrivateBin is licensed under the Zlib/libpng license, see LICENSE.md.
 Modifications in this fork are by Quad4 Software.
 
 Run into any issues? Have ideas for further developments? Please
-[report](https://github.com/Quad4-Software/PrivateBin/issues) them!
+[report](https://github.com/Quad4-Software/VoidBin/issues) them!
 For bugs in upstream PrivateBin itself, use the
 [upstream tracker](https://github.com/PrivateBin/PrivateBin/issues).

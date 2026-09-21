@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question and support
-    url: https://github.com/Quad4-Software/PrivateBin/issues/new
+    url: https://github.com/Quad4-Software/VoidBin/issues/new
     about: Your setup is not working and you need help or you have a question regarding this PrivateBin fork
   - name: Upstream PrivateBin
     url: https://github.com/PrivateBin/PrivateBin/issues

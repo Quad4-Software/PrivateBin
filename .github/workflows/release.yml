@@ -50,8 +50,8 @@ jobs:
 
       - name: Collect artifacts
         run: |
-          wget -q "https://github.com/Quad4-Software/PrivateBin/archive/refs/tags/${GITHUB_REF_NAME}.tar.gz"
-          wget -q "https://github.com/Quad4-Software/PrivateBin/archive/refs/tags/${GITHUB_REF_NAME}.zip"
+          wget -q "https://github.com/Quad4-Software/VoidBin/archive/refs/tags/${GITHUB_REF_NAME}.tar.gz"
+          wget -q "https://github.com/Quad4-Software/VoidBin/archive/refs/tags/${GITHUB_REF_NAME}.zip"
 
       - name: Generate hashes
         shell: bash

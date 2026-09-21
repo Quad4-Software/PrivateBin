@@ -57,7 +57,7 @@ class Configuration
                 'bootstrap-compact',
                 'bootstrap-compact-page',
             ],
-            'info'                     => 'VoidBin is a hardened <a href=\'https://github.com/Quad4-Software/PrivateBin\'>Quad4 Software fork</a> of <a href=\'https://privatebin.info/\'>PrivateBin</a>.',
+            'info'                     => 'VoidBin is a hardened <a href=\'https://github.com/Quad4-Software/VoidBin\'>Quad4 Software fork</a> of <a href=\'https://privatebin.info/\'>PrivateBin</a>.',
             'notice'                   => '',
             'languageselection'        => false,
             'languagedefault'          => '',

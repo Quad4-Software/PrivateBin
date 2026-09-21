@@ -15,12 +15,12 @@
 		"encrypted",
 		"AES"
 	],
-	"homepage" : "https://github.com/Quad4-Software/PrivateBin",
+	"homepage" : "https://github.com/Quad4-Software/VoidBin",
 	"license" : "zlib-acknowledgement",
 	"support" : {
-		"issues" : "https://github.com/Quad4-Software/PrivateBin/issues",
+		"issues" : "https://github.com/Quad4-Software/VoidBin/issues",
 		"wiki" : "https://github.com/PrivateBin/PrivateBin/wiki",
-		"source" : "https://github.com/Quad4-Software/PrivateBin",
+		"source" : "https://github.com/Quad4-Software/VoidBin",
 		"docs" : "https://privatebin.info/codedoc/"
 	},
 	"require" : {
