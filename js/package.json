@@ -1,7 +1,7 @@
 {
   "name": "privatebin",
   "version": "2.0.6",
-  "description": "PrivateBin is a minimalist, open source online pastebin where the server has zero knowledge of stored data. Data is encrypted/decrypted in the browser using 256 bit AES in Galois Counter mode (GCM).",
+  "description": "Quad4 Software fork of PrivateBin, a minimalist, open source online pastebin where the server has zero knowledge of stored data. Data is encrypted/decrypted in the browser using 256 bit AES in Galois Counter mode (GCM).",
   "main": "privatebin.js",
   "directories": {
     "test": "test"
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PrivateBin/PrivateBin.git"
+    "url": "git+https://github.com/Quad4-Software/PrivateBin.git"
   },
   "keywords": [
     "private",
@@ -43,8 +43,8 @@
   "author": "",
   "license": "zlib-acknowledgement",
   "bugs": {
-    "url": "https://github.com/PrivateBin/PrivateBin/issues"
+    "url": "https://github.com/Quad4-Software/PrivateBin/issues"
   },
-  "homepage": "https://privatebin.info/",
+  "homepage": "https://github.com/Quad4-Software/PrivateBin",
   "packageManager": "pnpm@12.5.1+sha512.e3f305bc784a2bc89f5ad3b6138889470fae8d2af5f36b61216ec91c2c3d64089775f9de38aac331044ea40f245cb0d5666392dfdf65824e1907ef6a2c62de5f"
 }

@@ -4,6 +4,8 @@
 ; All options: https://github.com/PrivateBin/PrivateBin/wiki/Configuration
 
 [main]
+name = "PrivateBin"
+info = "Hardened <a href='https://github.com/Quad4-Software/PrivateBin'>Quad4 Software fork</a> of PrivateBin, served behind <a href='https://ravenguard.quad4.io/'>RavenGuard</a>."
 discussion = false
 opendiscussion = false
 password = true
