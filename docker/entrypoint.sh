@@ -2,15 +2,15 @@
 set -u
 
 mkdir -p /tmp/nginx-client /tmp/nginx-proxy /tmp/nginx-fastcgi /tmp/nginx-uwsgi /tmp/nginx-scgi
-mkdir -p /data/ravenguard
+mkdir -p /tmp/ravenguard /data/ravenguard 2>/dev/null || true
 
 php-fpm &
 FPM_PID=$!
 nginx -c /etc/nginx/nginx.conf -g 'daemon off;' &
 NGINX_PID=$!
-# Run from the writable data volume, the default manual cert store resolves
-# to ./data/manual-certs relative to the working directory.
-(cd /data && exec ravenguard -config /etc/ravenguard/ravenguard.toml) &
+# Run from writable tmpfs, the unconditional manual cert store resolves to
+# ./data/manual-certs relative to the working directory and TLS is off here.
+(cd /tmp/ravenguard && exec ravenguard -config /etc/ravenguard/ravenguard.toml) &
 RG_PID=$!
 
 alive() {
