@@ -150,4 +150,79 @@ conseq_or_bottom inv (interp (nth_iterate sBody n) (MemElem mem))
             {numRuns: 10});
         });
     });
+
+    describe('getShortCode', function () {
+        this.timeout(10000);
+        let codes = [];
+
+        it('returns unique 10 character Crockford base32 codes', () => {
+            fc.assert(fc.property(
+                fc.integer(),
+                function() {
+                    const clean = globalThis.cleanup();
+                    Object.defineProperty(window, 'crypto', {
+                        value: new WebCrypto(),
+                        configurable: true,
+                        enumerable: true,
+                        writable: false
+                    });
+                    const code = PrivateBin.CryptTool.getShortCode(),
+                        result = /^[0-9a-hjkmnp-tv-z]{10}$/.test(code) &&
+                            codes.indexOf(code) === -1;
+                    codes.push(code);
+                    clean();
+                    return result;
+                }
+            ),
+            {numRuns: 20});
+        });
+    });
+
+    describe('short code key handling', function () {
+        afterEach(async function () {
+            await new Promise(resolve => setTimeout(resolve, 1900));
+        });
+        this.timeout(30000);
+
+        it('roundtrips a message with a short code as key', async function () {
+            const clean = globalThis.cleanup();
+            PrivateBin.Controller.initZlib();
+            Object.defineProperty(window, 'crypto', {
+                value: new WebCrypto(),
+                configurable: true,
+                enumerable: true,
+                writable: false
+            });
+            global.atob = common.atob;
+            global.btoa = common.btoa;
+            const code = PrivateBin.CryptTool.getShortCode(),
+                message = 'short link roundtrip test',
+                cipherMessage = await PrivateBin.CryptTool.cipher(code, '', message, []),
+                plaintext = await PrivateBin.CryptTool.decipher(code, '', cipherMessage);
+            clean();
+            assert.strictEqual(message, plaintext);
+        });
+
+        it('rejects a different short code', async function () {
+            const clean = globalThis.cleanup();
+            PrivateBin.Controller.initZlib();
+            Object.defineProperty(window, 'crypto', {
+                value: new WebCrypto(),
+                configurable: true,
+                enumerable: true,
+                writable: false
+            });
+            global.atob = common.atob;
+            global.btoa = common.btoa;
+            let code = PrivateBin.CryptTool.getShortCode(),
+                wrongCode = PrivateBin.CryptTool.getShortCode();
+            while (wrongCode === code) {
+                wrongCode = PrivateBin.CryptTool.getShortCode();
+            }
+            const cipherMessage = await PrivateBin.CryptTool.cipher(code, '', 'secret', []),
+                plaintext = await PrivateBin.CryptTool.decipher(wrongCode, '', cipherMessage);
+            clean();
+            assert.strictEqual('', plaintext);
+        });
+    });
 });

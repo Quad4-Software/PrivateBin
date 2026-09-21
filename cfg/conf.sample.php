@@ -81,6 +81,13 @@ languageselection = false
 ; This only works if the "urlshortener" option is set.
 ; shortenbydefault = false
 
+; (optional) Offer a "Short link" option when creating a document. Instead of a
+; random 256 bit key, the document is protected by a 10 character Crockford
+; base32 code (50 bit) carried in the URL fragment and stretched with PBKDF2,
+; so the server still never sees it. The resulting link is short enough to type
+; by hand, but has lower entropy than a regular link.
+; shortlink = false
+
 ; (optional) Let users create a QR code for sharing the document URL with one click.
 ; It works both when a new document is created and when you view a document.
 ; qrcode = true

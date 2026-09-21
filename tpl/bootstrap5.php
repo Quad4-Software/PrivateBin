@@ -228,6 +228,18 @@ endif;
 							</div>
 						</li>
 <?php
+if ($SHORTLINK) :
+?>
+						<li class="nav-item">
+							<div id="shortlinkoption" class="navbar-text form-check hidden">
+								<input class="form-check-input" type="checkbox" id="shortlink" name="shortlink" />
+								<label class="form-check-label" for="shortlink" title="<?php echo I18n::_('Creates an easier to type link, with reduced entropy'); ?>">
+									<?php echo I18n::_('Short link'), PHP_EOL; ?>
+								</label>
+							</div>
+						</li>
+<?php
+endif;
 if ($DISCUSSION) :
 ?>
 						<li class="nav-item">

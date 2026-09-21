@@ -1336,6 +1336,30 @@ window.PrivateBin = (function () {
         };
 
         /**
+         * returns a random short code for short links
+         *
+         * generates 10 characters from the Crockford base32 alphabet (50 bit
+         * entropy), excluding visually ambiguous characters so the code can
+         * be typed by hand, the code replaces the random key in the URL
+         * fragment and is stretched by PBKDF2 like a password
+         *
+         * @name   CryptTool.getShortCode
+         * @function
+         * @throws {string}
+         * @return {string} short code
+         */
+        me.getShortCode = function () {
+            const alphabet = '0123456789abcdefghjkmnpqrstvwxyz';
+            const byteArray = new Uint8Array(10);
+            window.crypto.getRandomValues(byteArray);
+            let code = '';
+            for (let i = 0; i < byteArray.length; ++i) {
+                code += alphabet[byteArray[i] % 32];
+            }
+            return code;
+        };
+
+        /**
          * base58 encode a DOMString (UTF-16)
          *
          * @name   CryptTool.base58encode
@@ -1378,6 +1402,7 @@ window.PrivateBin = (function () {
         let id = null,
             pasteData = null,
             symmetricKey = null,
+            shortLink = false,
             templates;
 
         /**
@@ -1523,6 +1548,16 @@ window.PrivateBin = (function () {
                     throw 'no encryption key given';
                 }
 
+                // a fragment starting with s_ carries a short code instead of
+                // the base58 encoded key, the code is the key material itself
+                shortLink = newKey.startsWith('s_');
+                if (shortLink) {
+                    // normalize codes typed by hand: lowercase and apply the
+                    // Crockford base32 aliases for visually similar characters
+                    symmetricKey = newKey.substring(2).toLowerCase().replace(/[il]/g, '1').replace(/o/g, '0');
+                    return symmetricKey;
+                }
+
                 // version 2 uses base58, version 1 uses base64 without decoding
                 try {
                     // base58 encode strips NULL bytes at the beginning of the
@@ -1534,6 +1569,28 @@ window.PrivateBin = (function () {
             }
 
             return symmetricKey;
+        };
+
+        /**
+         * returns true when the document key is a short code in the fragment
+         *
+         * @name   Model.isShortLink
+         * @function
+         * @return {bool}
+         */
+        me.isShortLink = function () {
+            return shortLink;
+        };
+
+        /**
+         * marks the current document as created with a short code key
+         *
+         * @name   Model.setShortLink
+         * @function
+         * @param  {bool} value
+         */
+        me.setShortLink = function (value) {
+            shortLink = value === true;
         };
 
         /**
@@ -1564,6 +1621,7 @@ window.PrivateBin = (function () {
          */
         me.reset = function () {
             pasteData = templates = id = symmetricKey = null;
+            shortLink = false;
         };
 
         /**
@@ -3822,6 +3880,8 @@ window.PrivateBin = (function () {
             emailLink,
             sendButton,
             retryButton,
+            shortLink,
+            shortLinkOption,
             pasteExpiration = null,
             retryButtonCallback;
 
@@ -3970,7 +4030,7 @@ window.PrivateBin = (function () {
                 document.title,
                 // recreate document URL
                 Helper.baseUri() + '?' + Model.getPasteId() + '#' +
-                CryptTool.base58encode(Model.getPasteKey())
+                (Model.isShortLink() ? 's_' + Model.getPasteKey() : CryptTool.base58encode(Model.getPasteKey()))
             );
 
             // we use text/html instead of text/plain to avoid a bug when
@@ -4317,6 +4377,9 @@ window.PrivateBin = (function () {
             if (password) {
                 password.classList.remove('hidden');
             }
+            if (shortLinkOption) {
+                shortLinkOption.classList.remove('hidden');
+            }
             sendButton.classList.remove('hidden');
 
             createButtonsDisplayed = true;
@@ -4343,6 +4406,9 @@ window.PrivateBin = (function () {
             }
             if (password) {
                 password.classList.add('hidden');
+            }
+            if (shortLinkOption) {
+                shortLinkOption.classList.add('hidden');
             }
             if (attach) {
                 attach.classList.add('hidden');
@@ -4549,10 +4615,13 @@ window.PrivateBin = (function () {
             if (openDiscussion) {
                 openDiscussion.checked = openDiscussionDefault;
             }
-            if (openDiscussionDefault || !burnAfterReadingDefault) {
+            if (shortLink) {
+                shortLink.checked = false;
+            }
+            if (openDiscussionOption && (openDiscussionDefault || !burnAfterReadingDefault)) {
                 openDiscussionOption.classList.remove('buttondisabled');
             }
-            if (burnAfterReadingDefault || !openDiscussionDefault) {
+            if (burnAfterReadingOption && (burnAfterReadingDefault || !openDiscussionDefault)) {
                 burnAfterReadingOption.classList.remove('buttondisabled');
             }
 
@@ -4624,6 +4693,17 @@ window.PrivateBin = (function () {
          */
         me.getOpenDiscussion = function () {
             return openDiscussion ? !!openDiscussion.checked : false;
+        };
+
+        /**
+         * returns the state of the short link checkbox
+         *
+         * @name   TopNav.getShortLink
+         * @function
+         * @return {bool}
+         */
+        me.getShortLink = function () {
+            return shortLink ? !!shortLink.checked : false;
         };
 
         /**
@@ -4840,6 +4920,8 @@ window.PrivateBin = (function () {
             sendButton = document.getElementById('sendbutton');
             qrCodeLink = document.getElementById('qrcodelink');
             emailLink = document.getElementById('emaillink');
+            shortLink = document.getElementById('shortlink');
+            shortLinkOption = document.getElementById('shortlinkoption');
 
             bindEvents();
 
@@ -5157,7 +5239,8 @@ window.PrivateBin = (function () {
 
             // show notification
             const baseUri = Helper.baseUri() + '?',
-                url = baseUri + data.id + (TopNav.getBurnAfterReading() ? loadConfirmPrefix : '#') + CryptTool.base58encode(data.encryptionKey),
+                fragment = TopNav.getShortLink() ? 's_' + data.encryptionKey : CryptTool.base58encode(data.encryptionKey),
+                url = baseUri + data.id + (TopNav.getBurnAfterReading() ? loadConfirmPrefix : '#') + fragment,
                 deleteUrl = baseUri + 'pasteid=' + data.id + '&deletetoken=' + data.deletetoken;
             PasteStatus.createPasteNotification(url, deleteUrl);
 
@@ -5304,7 +5387,14 @@ window.PrivateBin = (function () {
 
             // prepare server interaction
             ServerInteraction.prepare();
-            ServerInteraction.setCryptParameters(TopNav.getPassword());
+            if (TopNav.getShortLink()) {
+                // a random short code replaces the random key, it serves as
+                // the key material and is stretched by PBKDF2 like a password
+                ServerInteraction.setCryptParameters(TopNav.getPassword(), CryptTool.getShortCode());
+                Model.setShortLink(true);
+            } else {
+                ServerInteraction.setCryptParameters(TopNav.getPassword());
+            }
 
             // set success/fail functions
             ServerInteraction.setSuccess(showCreatedPaste);
@@ -5312,6 +5402,7 @@ window.PrivateBin = (function () {
                 // revert loading status…
                 Alert.hideLoading();
                 TopNav.showCreateButtons();
+                Model.setShortLink(false);
 
                 // show error message
                 Alert.showError(

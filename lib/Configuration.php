@@ -63,6 +63,7 @@ class Configuration
             'languagedefault'          => '',
             'urlshortener'             => '',
             'shortenbydefault'         => false,
+            'shortlink'                => false,
             'qrcode'                   => true,
             'email'                    => true,
             'icon'                     => 'jdenticon',

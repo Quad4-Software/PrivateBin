@@ -221,6 +221,62 @@ describe('Model', function () {
                 }
             ));
         });
+        it('returns the short code of an s_ prefixed fragment', () => {
+            fc.assert(fc.property(
+                common.fcUrl(),
+                function (url) {
+                    url.fragment = 's_0123abcd';
+                    const clean = globalThis.cleanup('', {url: common.urlToString(url)}),
+                        result = PrivateBin.Model.getPasteKey(),
+                        short = PrivateBin.Model.isShortLink();
+                    PrivateBin.Model.reset();
+                    clean();
+                    return result === '0123abcd' && short === true;
+                }
+            ));
+        });
+        it('returns the short code after the load confirmation prefix', () => {
+            fc.assert(fc.property(
+                common.fcUrl(),
+                function (url) {
+                    url.fragment = '-s_0123abcd';
+                    const clean = globalThis.cleanup('', {url: common.urlToString(url)}),
+                        result = PrivateBin.Model.getPasteKey(),
+                        short = PrivateBin.Model.isShortLink();
+                    PrivateBin.Model.reset();
+                    clean();
+                    return result === '0123abcd' && short === true;
+                }
+            ));
+        });
+        it('normalizes upper case and ambiguous characters in short codes', () => {
+            fc.assert(fc.property(
+                common.fcUrl(),
+                function (url) {
+                    url.fragment = 's_ABCD1ILO';
+                    const clean = globalThis.cleanup('', {url: common.urlToString(url)}),
+                        result = PrivateBin.Model.getPasteKey();
+                    PrivateBin.Model.reset();
+                    clean();
+                    return result === 'abcd1110';
+                }
+            ));
+        });
+        it('does not mark regular v2 fragments as short links', () => {
+            fc.assert(fc.property(
+                common.fcUrl(),
+                function (url) {
+                    const fragment = url.fragment.padStart(32, ' ');
+                    url.fragment = PrivateBin.CryptTool.base58encode(fragment);
+                    const clean = globalThis.cleanup('', {url: common.urlToString(url)}),
+                        result = PrivateBin.Model.getPasteKey(),
+                        short = PrivateBin.Model.isShortLink();
+                    PrivateBin.Model.reset();
+                    clean();
+                    return fragment === result && short === false;
+                }
+            ));
+        });
     });
 
     describe('getTemplate', function () {

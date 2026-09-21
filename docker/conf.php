@@ -9,6 +9,7 @@ opendiscussion = false
 password = true
 fileupload = false
 burnafterreadingselected = true
+shortlink = true
 defaultformatter = "plaintext"
 sizelimit = 2097152
 templateselection = false
