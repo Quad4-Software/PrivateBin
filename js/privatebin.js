@@ -1228,7 +1228,8 @@ window.PrivateBin = (function () {
         me.cipher = async function (key, password, message, adata) {
             let zlib = (await z);
             // AES in Galois Counter Mode, keysize 256 bit,
-            // authentication tag 128 bit, 10000 iterations in key derivation
+            // authentication tag 128 bit, 600000 PBKDF2 iterations
+            // (OWASP recommendation for PBKDF2-HMAC-SHA256)
             const compression = (
                 typeof zlib === 'undefined' ?
                     'none' : // client lacks support for WASM
@@ -1237,7 +1238,7 @@ window.PrivateBin = (function () {
                 spec = [
                     getRandomBytes(16), // initialization vector
                     getRandomBytes(8),  // salt
-                    100000,             // iterations
+                    600000,             // iterations
                     256,                // key size
                     128,                // tag size
                     'aes',              // algorithm
