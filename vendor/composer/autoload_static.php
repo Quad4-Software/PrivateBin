@@ -11,19 +11,19 @@ class ComposerStaticInitDontChange
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
         ),
-        'P' => 
+        'P' =>
         array (
             'PrivateBin\\' => 11,
         ),
-        'J' => 
+        'J' =>
         array (
             'Jdenticon\\' => 10,
         ),
-        'I' => 
+        'I' =>
         array (
             'Identicon\\' => 10,
             'IPLib\\' => 6,
@@ -31,23 +31,23 @@ class ComposerStaticInitDontChange
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'PrivateBin\\' => 
+        'PrivateBin\\' =>
         array (
             0 => __DIR__ . '/../..' . '/lib',
         ),
-        'Jdenticon\\' => 
+        'Jdenticon\\' =>
         array (
             0 => __DIR__ . '/..' . '/jdenticon/jdenticon/src',
         ),
-        'Identicon\\' => 
+        'Identicon\\' =>
         array (
             0 => __DIR__ . '/..' . '/yzalis/identicon/src/Identicon',
         ),
-        'IPLib\\' => 
+        'IPLib\\' =>
         array (
             0 => __DIR__ . '/..' . '/mlocati/ip-lib/src',
         ),
