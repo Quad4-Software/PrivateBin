@@ -58,7 +58,7 @@ class ControllerTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
         $this->assertStringContainsString(
-            '<title>PrivateBin</title>',
+            '<title>VoidBin</title>',
             $content,
             'outputs title correctly'
         );
@@ -88,7 +88,7 @@ class ControllerTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
         $this->assertStringContainsString(
-            '<title>PrivateBin</title>',
+            '<title>VoidBin</title>',
             $content,
             'outputs title correctly'
         );
@@ -109,7 +109,7 @@ class ControllerTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
         $this->assertStringContainsString(
-            '<title>PrivateBin</title>',
+            '<title>VoidBin</title>',
             $content,
             'outputs title correctly'
         );
@@ -130,7 +130,7 @@ class ControllerTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
         $this->assertStringContainsString(
-            '<title>PrivateBin</title>',
+            '<title>VoidBin</title>',
             $content,
             'outputs title correctly'
         );

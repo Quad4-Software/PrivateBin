@@ -35,7 +35,7 @@ class Configuration
      */
     private static $_defaults = [
         'main' => [
-            'name'                     => 'PrivateBin',
+            'name'                     => 'VoidBin',
             'basepath'                 => '',
             'discussion'               => true,
             'opendiscussion'           => false,
@@ -57,7 +57,7 @@ class Configuration
                 'bootstrap-compact',
                 'bootstrap-compact-page',
             ],
-            'info'                     => 'More information on the <a href=\'https://privatebin.info/\'>project page</a>.',
+            'info'                     => 'VoidBin is a hardened <a href=\'https://github.com/Quad4-Software/PrivateBin\'>Quad4 Software fork</a> of <a href=\'https://privatebin.info/\'>PrivateBin</a>.',
             'notice'                   => '',
             'languageselection'        => false,
             'languagedefault'          => '',

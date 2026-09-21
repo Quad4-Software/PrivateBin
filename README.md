@@ -1,8 +1,8 @@
-# <img src="img/icon.svg" width="40" alt="" /> PrivateBin
+# <img src="img/icon.svg" width="40" alt="" /> VoidBin
 
 *Current version: 2.0.6*
 
-Quad4 Software fork of
+VoidBin is the Quad4 Software fork of
 [PrivateBin](https://github.com/PrivateBin/PrivateBin), a minimalist, open
 source online [pastebin](https://en.wikipedia.org/wiki/Pastebin)
 where the server has zero knowledge of stored data. This fork adds Quad4
@@ -17,7 +17,7 @@ PrivateBin is a fork of ZeroBin, originally developed by
 refactored to allow easier and cleaner extensions and has many additional
 features.
 
-## What PrivateBin provides
+## What VoidBin provides
 
 + As a server administrator you don't have to worry if your users post content
   that is considered illegal in your country. You have plausible deniability of
