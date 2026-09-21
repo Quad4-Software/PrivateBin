@@ -65,7 +65,9 @@ class View
     /**
      * get cache buster query string
      *
-     * if the file isn't versioned (ends in a digit), adds our own version as a query string
+     * if the file isn't versioned (ends in a digit), adds the file modification
+     * time as a query string, which changes per deployment without revealing
+     * the application version
      *
      * @access private
      * @param  string $file
@@ -75,7 +77,7 @@ class View
         if ((bool) preg_match('#[0-9]\.m?js$#', (string) $file)) {
             return '';
         }
-        return '?' . rawurlencode($this->_variables['VERSION']);
+        return '?' . rawurlencode((string) @filemtime(PUBLIC_PATH . '/' . ltrim((string) $file, '/')));
     }
 
     /**

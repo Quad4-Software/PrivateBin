@@ -11,15 +11,15 @@ use PrivateBin\I18n;
 		<meta name="google" content="notranslate">
 		<title><?php echo I18n::_($NAME); ?></title>
 		<link type="text/css" rel="stylesheet" href="css/bootstrap5/bootstrap<?php echo I18n::isRtl() ? '.rtl' : ''; ?>-5.3.8.css" />
-		<link type="text/css" rel="stylesheet" href="css/bootstrap5/privatebin.css?<?php echo rawurlencode($VERSION); ?>" />
+		<link type="text/css" rel="stylesheet" href="css/bootstrap5/privatebin.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/bootstrap5/privatebin.css')); ?>" />
 <?php
 if ($SYNTAXHIGHLIGHTING) :
 ?>
-		<link type="text/css" rel="stylesheet" href="css/prettify/prettify.css?<?php echo rawurlencode($VERSION); ?>" />
+		<link type="text/css" rel="stylesheet" href="css/prettify/prettify.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/prettify/prettify.css')); ?>" />
 <?php
     if (!empty($SYNTAXHIGHLIGHTINGTHEME)) :
 ?>
-		<link type="text/css" rel="stylesheet" href="css/prettify/<?php echo rawurlencode($SYNTAXHIGHLIGHTINGTHEME); ?>.css?<?php echo rawurlencode($VERSION); ?>" />
+		<link type="text/css" rel="stylesheet" href="css/prettify/<?php echo rawurlencode($SYNTAXHIGHLIGHTINGTHEME); ?>.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/prettify/' . $SYNTAXHIGHLIGHTINGTHEME . '.css')); ?>" />
 <?php
     endif;
 endif;
@@ -56,7 +56,7 @@ endif;
 		<link rel="apple-touch-icon" href="<?php echo I18n::encode($BASEPATH); ?>img/apple-touch-icon.png" sizes="180x180" />
 		<link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
 		<link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
-		<link rel="manifest" href="manifest.json?<?php echo rawurlencode($VERSION); ?>" />
+		<link rel="manifest" href="manifest.json?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/manifest.json')); ?>" />
 		<link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#0a0a0b" />
 		<link rel="shortcut icon" href="img/favicon.ico">
 		<meta name="msapplication-config" content="browserconfig.xml">
@@ -517,8 +517,7 @@ endif;
 		<footer class="container-fluid mt-auto">
 			<div class="row">
 				<h5 class="col-md-5 col-xs-8"><?php echo I18n::_($NAME); ?> <small>- <?php echo I18n::_('Because ignorance is bliss'); ?></small></h5>
-				<p class="col-md-1 col-xs-4 text-center"><?php echo $VERSION; ?></p>
-				<p id="aboutbox" class="col-md-6 col-xs-12">
+				<p id="aboutbox" class="col-md-7 col-xs-12">
 					<?php echo sprintf(
                         I18n::_('%s is a minimalist, open source online pastebin where the server has zero knowledge of stored data. Data is encrypted/decrypted %sin the browser%s using 256 bits AES.',
                             I18n::_($NAME),
