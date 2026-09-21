@@ -12,15 +12,20 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+
       - name: Fetch changelog from tag
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           sparse-checkout: CHANGELOG.md
           sparse-checkout-cone-mode: false
 
       - name: Extract latest changelog entry and attach it to draft
-        uses: taiki-e/create-gh-release-action@v1
+        uses: taiki-e/create-gh-release-action@eba8ea96c86cca8a37f1b56e94b4d13301fba651 # v1
         with:
           changelog: CHANGELOG.md
           draft: true
@@ -31,10 +36,15 @@ jobs:
       hashes: ${{ steps.hash.outputs.hashes }}
     runs-on: ubuntu-latest
     steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+
       - name: Collect artifacts
         run: |
-          wget -q "https://github.com/PrivateBin/PrivateBin/archive/refs/tags/${GITHUB_REF_NAME}.tar.gz"
-          wget -q "https://github.com/PrivateBin/PrivateBin/archive/refs/tags/${GITHUB_REF_NAME}.zip"
+          wget -q "https://github.com/Quad4-Software/PrivateBin/archive/refs/tags/${GITHUB_REF_NAME}.tar.gz"
+          wget -q "https://github.com/Quad4-Software/PrivateBin/archive/refs/tags/${GITHUB_REF_NAME}.zip"
 
       - name: Generate hashes
         shell: bash
@@ -48,7 +58,7 @@ jobs:
       actions: read
       id-token: write
       contents: write
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@f7dd8c54c2067bafc12ca7a55595d5ee9b75204a # v2.1.0
     with:
       base64-subjects: "${{ needs.release.outputs.hashes }}"
       draft-release: true

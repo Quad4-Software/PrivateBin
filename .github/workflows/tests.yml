@@ -13,12 +13,19 @@ jobs:
   Composer:
     runs-on: ubuntu-latest
     steps:
+    - name: Harden runner
+      uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         persist-credentials: false
+
     - name: Validate composer.json and composer.lock
       run: composer validate
+
     - name: Install dependencies
       run: composer install --prefer-dist --no-dev
 
@@ -41,30 +48,34 @@ jobs:
 
     steps:
 
-    # let's get started!
+    - name: Harden runner
+      uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         persist-credentials: false
 
     # cache PHP extensions
     - name: Setup cache environment
       id: extcache
-      uses: shivammathur/cache-extensions@v1
+      uses: shivammathur/cache-extensions@46472c646ce13b7712e69d161b4747ca610bc344 # v1
       with:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
         key: ${{ runner.os }}-${{ env.extensions-cache-key }}
 
     - name: Cache extensions
-      uses: actions/cache@v6
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
       with:
         path: ${{ steps.extcache.outputs.dir }}
         key: ${{ steps.extcache.outputs.key }}
         restore-keys: ${{ runner.os }}-${{ env.extensions-cache-key }}
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
       with:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
@@ -93,7 +104,7 @@ jobs:
       shell: bash
 
     - name: Cache dependencies
-      uses: actions/cache@v6
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
       with:
         path: "${{ steps.composer-cache.outputs.dir }}"
         key: "${{ runner.os }}-composer-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/composer.json') }}"
@@ -116,7 +127,7 @@ jobs:
 
     - name: Upload Test Results
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: Test Results (PHP ${{ matrix.php-versions }})
         path: tst/results.xml
@@ -131,30 +142,34 @@ jobs:
 
     steps:
 
-    # let's get started!
+    - name: Harden runner
+      uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         persist-credentials: false
 
     # cache PHP extensions
     - name: Setup cache environment
       id: extcache
-      uses: shivammathur/cache-extensions@v1
+      uses: shivammathur/cache-extensions@46472c646ce13b7712e69d161b4747ca610bc344 # v1
       with:
         php-version: ${{ env.php-version }}
         extensions: ${{ env.extensions }}
         key: ${{ runner.os }}-${{ env.extensions-cache-key }}
 
     - name: Cache extensions
-      uses: actions/cache@v6
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
       with:
         path: ${{ steps.extcache.outputs.dir }}
         key: ${{ steps.extcache.outputs.key }}
         restore-keys: ${{ runner.os }}-${{ env.extensions-cache-key }}
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
       with:
         php-version: ${{ env.php-version }}
         extensions: ${{ env.extensions }}
@@ -183,7 +198,7 @@ jobs:
       shell: bash
 
     - name: Cache dependencies
-      uses: actions/cache@v6
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
       with:
         path: "${{ steps.composer-cache.outputs.dir }}"
         key: "${{ runner.os }}-composer-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/composer.json') }}"
@@ -209,7 +224,7 @@ jobs:
 
     - name: Upload Test Results
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: Test Results
         path: tst/results.xml
@@ -218,20 +233,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - name: Harden runner
+      uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         persist-credentials: false
 
     - name: Setup Node
-      uses: actions/setup-node@v7
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
       with:
         node-version: '20'
         cache: 'npm'
         cache-dependency-path: 'js/package-lock.json'
-
-    - name: Setup Mocha
-      run: npm install -g mocha
 
     - name: Setup Node modules
       run: npm ci
@@ -243,7 +260,7 @@ jobs:
 
     - name: Upload Test Results
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: Test Results (Mocha)
         path: js/mocha-results.xml
@@ -252,8 +269,13 @@ jobs:
     name: "Event File"
     runs-on: ubuntu-latest
     steps:
+    - name: Harden runner
+      uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+      with:
+        egress-policy: audit
+
     - name: Upload
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: Event File
         path: "${{ github.event_path }}"
