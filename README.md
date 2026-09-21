@@ -1,15 +1,18 @@
-# [![PrivateBin](https://raw.githubusercontent.com/PrivateBin/assets/master/images/preview/logoSmall.png)](https://privatebin.info/)
+# <img src="img/icon.svg" width="40" alt="" /> PrivateBin
 
 *Current version: 2.0.6*
 
-**PrivateBin** is a minimalist, open source online
-[pastebin](https://en.wikipedia.org/wiki/Pastebin)
-where the server has zero knowledge of stored data.
+Quad4 Software fork of
+[PrivateBin](https://github.com/PrivateBin/PrivateBin), a minimalist, open
+source online [pastebin](https://en.wikipedia.org/wiki/Pastebin)
+where the server has zero knowledge of stored data. This fork adds Quad4
+branding and a hardened Docker image that serves the application behind the
+[RavenGuard](https://ravenguard.quad4.io) WAF and reverse proxy.
 
 Data is encrypted and decrypted in the browser using 256bit AES in
 [Galois Counter mode](https://en.wikipedia.org/wiki/Galois/Counter_Mode).
 
-This is a fork of ZeroBin, originally developed by
+PrivateBin is a fork of ZeroBin, originally developed by
 [Sébastien Sauvage](https://github.com/sebsauvage/ZeroBin). PrivateBin was
 refactored to allow easier and cleaner extensions and has many additional
 features.
@@ -106,5 +109,24 @@ file](https://github.com/PrivateBin/PrivateBin/wiki/Configuration):
 
 * [Developer guide](https://github.com/PrivateBin/PrivateBin/wiki/Development)
 
+## Container image
+
+The Dockerfile builds a single image with RavenGuard in front of nginx and
+PHP-FPM. Paste data lives in `/data`, outside the web root.
+
+```
+docker compose up --build
+```
+
+Set `RG_CHALLENGE_SECRET` (16+ characters) before enabling the browser
+challenge and see `docker/ravenguard.toml` for the WAF defaults.
+
+## License
+
+PrivateBin is licensed under the Zlib/libpng license, see LICENSE.md.
+Modifications in this fork are by Quad4 Software.
+
 Run into any issues? Have ideas for further developments? Please
-[report](https://github.com/PrivateBin/PrivateBin/issues) them!
+[report](https://github.com/Quad4-Software/PrivateBin/issues) them!
+For bugs in upstream PrivateBin itself, use the
+[upstream tracker](https://github.com/PrivateBin/PrivateBin/issues).

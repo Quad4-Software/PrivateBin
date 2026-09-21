@@ -4,13 +4,15 @@ PrivateBin consists of PHP and JS code which was originally written by Sébastie
 Sauvage in 2012 and falls under the Zlib/libpng license. Also included are
 libraries that fall under the GPLv2 (rawinflate), BSD 3-clause (Showdown), MIT
 (base64.js version 1.7, Bootstrap, Identicon, random_compat, composer, kjua,
-base-x), Apache (prettify.js) and CC-BY (favicon, icon, logo) licenses. All of
-these license terms can be found here below:
+base-x) and Apache (prettify.js) licenses. The Quad4 logo mark shipped in img/
+is copyright Quad4 Software. All of these license terms can be found here
+below:
 
 ## Zlib/libpng license for PrivateBin and zlib
 
 Copyright © 2012 Sébastien Sauvage
 Copyright © 1995-2017 Jean-loup Gailly and Mark Adler
+Modifications copyright © 2026 Quad4 Software
 
 This software is provided 'as-is', without any express or implied warranty. In
 no event will the authors be held liable for any damages arising from the use
