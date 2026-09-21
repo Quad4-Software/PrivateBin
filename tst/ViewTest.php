@@ -59,6 +59,7 @@ class ViewTest extends TestCase
         $page->assign('EXPIRE', self::$expire);
         $page->assign('EXPIREDEFAULT', self::$expire_default);
         $page->assign('URLSHORTENER', '');
+        $page->assign('SHORTLINK', true);
         $page->assign('QRCODE', true);
         $page->assign('EMAIL', true);
         $page->assign('HTTPWARNING', true);

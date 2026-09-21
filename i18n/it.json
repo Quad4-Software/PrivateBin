@@ -31,6 +31,8 @@
     "Raw text": "Testo Raw",
     "Expires": "Scade",
     "Burn after reading": "Distruggi dopo lettura",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "Apri discussione",
     "Password (recommended)": "Password (raccomandato)",
     "Discussion": "Discussione",

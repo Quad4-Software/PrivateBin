@@ -31,6 +31,8 @@
     "Raw text": "ข้อความล้วน",
     "Expires": "หมดอายุ",
     "Burn after reading": "ลบทันทีเมื่อเปิดอ่าน",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "แสดงความคิดเห็นได้",
     "Password (recommended)": "รหัสผ่าน (แนะนำให้ใส่)",
     "Discussion": "ความคิดเห็น",

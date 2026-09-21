@@ -31,6 +31,8 @@
     "Raw text": "원본 텍스트",
     "Expires": "만료 기간",
     "Burn after reading": "읽은 후 삭제",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "댓글 허용",
     "Password (recommended)": "비밀번호 (권장)",
     "Discussion": "댓글",

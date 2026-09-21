@@ -31,6 +31,8 @@
     "Raw text": "Lähtetekst",
     "Expires": "Aegub",
     "Burn after reading": "Põleta pärast lugemist",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "Avatud arutelu",
     "Password (recommended)": "Parool (soovitatav)",
     "Discussion": "Arutelu",

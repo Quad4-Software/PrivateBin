@@ -31,6 +31,8 @@
     "Raw text": "纯文本",
     "Expires": "有效期",
     "Burn after reading": "阅后即焚",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "开放讨论",
     "Password (recommended)": "密码（推荐）",
     "Discussion": "讨论",

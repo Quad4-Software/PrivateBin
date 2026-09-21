@@ -31,6 +31,8 @@
     "Raw text": "原始文字",
     "Expires": "到期時間",
     "Burn after reading": "閱後即焚",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "開放討論",
     "Password (recommended)": "密碼 (建議使用)",
     "Discussion": "討論",

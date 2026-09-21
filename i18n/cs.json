@@ -31,6 +31,8 @@
     "Raw text": "Čistý text",
     "Expires": "Expirace",
     "Burn after reading": "Po přečtení smazat",
+    "Short link": "Short link",
+    "Creates an easier to type link, with reduced entropy": "Creates an easier to type link, with reduced entropy",
     "Open discussion": "Povolit komentáře",
     "Password (recommended)": "Heslo (doporučeno)",
     "Discussion": "Komentáře",
