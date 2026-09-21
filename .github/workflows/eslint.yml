@@ -4,18 +4,23 @@ on:
   push:
     paths:
       - 'js/**/*.js'
-      - 'js/package-lock.json'
+      - 'js/pnpm-lock.yaml'
       - .github/workflows/eslint.yml
   pull_request:
     paths:
       - 'js/**/*.js'
-      - 'js/package-lock.json'
+      - 'js/pnpm-lock.yaml'
       - .github/workflows/eslint.yml
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   eslint:
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner

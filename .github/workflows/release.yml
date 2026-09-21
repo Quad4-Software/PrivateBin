@@ -6,10 +6,16 @@ on:
 
 permissions: {}
 
+# tag pushes are unique, do not cancel a release in flight
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   draft:
+    name: Draft release
     permissions:
-      contents: write
+      contents: write # needed to create the draft release
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
@@ -32,6 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   release:
+    name: Collect release artifacts
     outputs:
       hashes: ${{ steps.hash.outputs.hashes }}
     runs-on: ubuntu-latest
@@ -54,10 +61,11 @@ jobs:
   provenance:
     needs:
       - release
+    name: SLSA provenance
     permissions:
-      actions: read
-      id-token: write
-      contents: write
+      actions: read # needed to read workflow metadata for the attestation
+      id-token: write # needed to mint the OIDC token for signing
+      contents: write # needed to attach provenance to the draft release
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@f7dd8c54c2067bafc12ca7a55595d5ee9b75204a # v2.1.0
     with:
       base64-subjects: "${{ needs.release.outputs.hashes }}"

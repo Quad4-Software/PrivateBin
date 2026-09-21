@@ -9,16 +9,19 @@ on:
 
 permissions: {}
 
+# scheduled and push runs are infrequent, let them finish
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   analysis:
     name: Scorecard analysis
     runs-on: ubuntu-latest
     permissions:
-      # needed to upload the SARIF results to code scanning
-      security-events: write
-      # needed to publish results to the OpenSSF REST API
-      id-token: write
-      actions: read
+      security-events: write # needed to upload the SARIF results to code scanning
+      id-token: write # needed to publish results to the OpenSSF REST API
+      actions: read # needed to read the workflow list for branch protection checks
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1

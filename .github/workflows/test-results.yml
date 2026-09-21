@@ -1,6 +1,9 @@
 name: Test Results
 
 on:
+  # the job-level condition limits this to runs from this repository, so
+  # artifacts produced by fork pull request code are never processed here
+  # zizmor: ignore[dangerous-triggers]
   workflow_run:
     workflows: ["Tests"]
     types:
@@ -8,20 +11,23 @@ on:
 
 permissions: {}
 
+# one publish per triggering Tests run, never cancel mid-publish
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
 jobs:
   test-results:
     name: Test Results
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion != 'skipped'
+    if: >-
+      github.event.workflow_run.conclusion != 'skipped' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
 
     permissions:
-      checks: write
-
-      # needed unless run with comment_mode: off
-      pull-requests: write
-
-      # required by download step to access artifacts API
-      actions: read
+      checks: write # needed to publish check runs with the test results
+      pull-requests: write # needed unless run with comment_mode: off
+      actions: read # required by download step to access artifacts API
 
     steps:
        - name: Harden runner

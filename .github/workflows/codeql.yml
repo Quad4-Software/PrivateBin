@@ -10,11 +10,15 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     permissions:
-      security-events: write
+      security-events: write # needed to upload the SARIF results to code scanning
     runs-on: ubuntu-latest
 
     strategy:

@@ -8,9 +8,14 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
 
   Composer:
+    name: Composer validation
     runs-on: ubuntu-latest
     steps:
     - name: Harden runner
@@ -83,10 +88,10 @@ jobs:
     # Setup GitHub CI PHP problem matchers
     # https://github.com/shivammathur/setup-php#problem-matchers
     - name: Setup problem matchers for PHP
-      run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+      run: echo "::add-matcher::${RUNNER_TOOL_CACHE}/php.json"
 
     - name: Setup problem matchers for PHPUnit
-      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+      run: echo "::add-matcher::${RUNNER_TOOL_CACHE}/phpunit.json"
 
     # composer cache
     - name: Remove composer lock
@@ -177,10 +182,10 @@ jobs:
     # Setup GitHub CI PHP problem matchers
     # https://github.com/shivammathur/setup-php#problem-matchers
     - name: Setup problem matchers for PHP
-      run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+      run: echo "::add-matcher::${RUNNER_TOOL_CACHE}/php.json"
 
     - name: Setup problem matchers for PHPUnit
-      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+      run: echo "::add-matcher::${RUNNER_TOOL_CACHE}/phpunit.json"
 
     # composer cache
     - name: Remove composer lock
@@ -230,6 +235,7 @@ jobs:
         path: tst/results.xml
 
   Mocha:
+    name: Mocha unit tests
     runs-on: ubuntu-latest
     steps:
 
