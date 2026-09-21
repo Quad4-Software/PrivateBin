@@ -50,7 +50,19 @@ COPY docker/seccomp-ravenguard.json /etc/ravenguard/seccomp.json
 COPY docker/entrypoint.sh /entrypoint.sh
 COPY --from=ravenguard-build --chmod=755 /out/ravenguard /usr/local/bin/ravenguard
 
-RUN chmod 755 /entrypoint.sh && chown -R 10001:10001 /srv/privatebin
+# generate subresource integrity hashes for every served css and js file,
+# the template reads them from the sri config section
+RUN php -r ' \
+	$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("/srv/privatebin", FilesystemIterator::SKIP_DOTS)); \
+	$sri = "\n[sri]\n"; \
+	foreach ($it as $f) { \
+		$rel = substr($f->getPathname(), 16); \
+		if (preg_match("#^(css|js)/.*\\.(css|js)$#", $rel)) { \
+			$sri .= $rel . " = \"sha512-" . base64_encode(hash_file("sha512", $f->getPathname(), true)) . "\"\n"; \
+		} \
+	} \
+	file_put_contents("/srv/privatebin/cfg/conf.php", $sri, FILE_APPEND); \
+	' && chmod 755 /entrypoint.sh && chown -R 10001:10001 /srv/privatebin
 
 ARG VERSION=dev
 ARG REVISION=unknown

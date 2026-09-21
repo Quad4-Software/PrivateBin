@@ -10,21 +10,21 @@ use PrivateBin\I18n;
 		<meta name="robots" content="noindex" />
 		<meta name="google" content="notranslate">
 		<title><?php echo I18n::_($NAME); ?></title>
-		<link type="text/css" rel="stylesheet" href="css/bootstrap5/bootstrap<?php echo I18n::isRtl() ? '.rtl' : ''; ?>-5.3.8.css" />
-		<link type="text/css" rel="stylesheet" href="css/bootstrap5/privatebin.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/bootstrap5/privatebin.css')); ?>" />
+		<link type="text/css" rel="stylesheet" href="css/bootstrap5/bootstrap<?php echo I18n::isRtl() ? '.rtl' : ''; ?>-5.3.8.css"<?php echo $this->_getSri('css/bootstrap5/bootstrap' . (I18n::isRtl() ? '.rtl' : '') . '-5.3.8.css'); ?> />
+		<link type="text/css" rel="stylesheet" href="css/bootstrap5/privatebin.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/bootstrap5/privatebin.css')); ?>"<?php echo $this->_getSri('css/bootstrap5/privatebin.css'); ?> />
 <?php
 if ($SYNTAXHIGHLIGHTING) :
 ?>
-		<link type="text/css" rel="stylesheet" href="css/prettify/prettify.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/prettify/prettify.css')); ?>" />
+		<link type="text/css" rel="stylesheet" href="css/prettify/prettify.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/prettify/prettify.css')); ?>"<?php echo $this->_getSri('css/prettify/prettify.css'); ?> />
 <?php
     if (!empty($SYNTAXHIGHLIGHTINGTHEME)) :
 ?>
-		<link type="text/css" rel="stylesheet" href="css/prettify/<?php echo rawurlencode($SYNTAXHIGHLIGHTINGTHEME); ?>.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/prettify/' . $SYNTAXHIGHLIGHTINGTHEME . '.css')); ?>" />
+		<link type="text/css" rel="stylesheet" href="css/prettify/<?php echo rawurlencode($SYNTAXHIGHLIGHTINGTHEME); ?>.css?<?php echo rawurlencode((string) @filemtime(PUBLIC_PATH . '/css/prettify/' . $SYNTAXHIGHLIGHTINGTHEME . '.css')); ?>"<?php echo $this->_getSri('css/prettify/' . $SYNTAXHIGHLIGHTINGTHEME . '.css'); ?> />
 <?php
     endif;
 endif;
 ?>
-		<noscript><link type="text/css" rel="stylesheet" href="css/noscript.css" /></noscript>
+		<noscript><link type="text/css" rel="stylesheet" href="css/noscript.css"<?php echo $this->_getSri('css/noscript.css'); ?> /></noscript>
 		<?php $this->_linkTag('js/zlib-1.3.2.js'); ?>
 <?php
 if ($QRCODE) :
