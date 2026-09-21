@@ -60,3 +60,56 @@ html[dir="rtl"] #deletelink, html[dir="rtl"] #qrcodemodalClose {
 #sendbutton svg {
 	transform: translateY(1.5px);
 }
+
+/* Quad4 palette, see https://quad4.io/branding */
+:root, [data-bs-theme=light] {
+	--bs-body-bg: #fafafa;
+	--bs-body-color: #0a0a0b;
+	--bs-tertiary-bg: #f4f4f5;
+	--bs-border-color: #d9d9de;
+	--bs-link-color: #0a0a0b;
+	--bs-link-color-rgb: 10, 10, 11;
+	--bs-link-hover-color: #3a3a42;
+	--bs-link-hover-color-rgb: 58, 58, 66;
+}
+
+[data-bs-theme=dark] {
+	--bs-body-bg: #0a0a0b;
+	--bs-body-color: #f4f4f5;
+	--bs-tertiary-bg: #16161a;
+	--bs-border-color: #1f1f24;
+	--bs-link-color: #fafafa;
+	--bs-link-color-rgb: 250, 250, 250;
+	--bs-link-hover-color: #a1a1aa;
+	--bs-link-hover-color-rgb: 161, 161, 170;
+}
+
+.btn-primary {
+	--bs-btn-color: #fafafa;
+	--bs-btn-bg: #0a0a0b;
+	--bs-btn-border-color: #0a0a0b;
+	--bs-btn-hover-color: #fafafa;
+	--bs-btn-hover-bg: #2a2a31;
+	--bs-btn-hover-border-color: #2a2a31;
+	--bs-btn-active-color: #fafafa;
+	--bs-btn-active-bg: #1f1f24;
+	--bs-btn-active-border-color: #1f1f24;
+	--bs-btn-disabled-color: #fafafa;
+	--bs-btn-disabled-bg: #0a0a0b;
+	--bs-btn-disabled-border-color: #0a0a0b;
+}
+
+[data-bs-theme=dark] .btn-primary {
+	--bs-btn-color: #0a0a0b;
+	--bs-btn-bg: #fafafa;
+	--bs-btn-border-color: #fafafa;
+	--bs-btn-hover-color: #0a0a0b;
+	--bs-btn-hover-bg: #d9d9de;
+	--bs-btn-hover-border-color: #d9d9de;
+	--bs-btn-active-color: #0a0a0b;
+	--bs-btn-active-bg: #e9e9ec;
+	--bs-btn-active-border-color: #e9e9ec;
+	--bs-btn-disabled-color: #0a0a0b;
+	--bs-btn-disabled-bg: #fafafa;
+	--bs-btn-disabled-border-color: #fafafa;
+}
